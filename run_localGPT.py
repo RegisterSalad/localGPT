@@ -58,7 +58,7 @@ def load_model(device_type, model_id, model_basename=None):
             if device_type.lower() == "mps":
                 kwargs["n_gpu_layers"] = 1000
             if device_type.lower() == "cuda":
-                kwargs["n_gpu_layers"] = 1000
+                kwargs["n_gpu_layers"] = 700
                 kwargs["n_batch"] = max_ctx_size
             return LlamaCpp(**kwargs)
 
@@ -95,9 +95,9 @@ def load_model(device_type, model_id, model_basename=None):
             model_id,
             device_map="auto",
             torch_dtype=torch.float16,
-            low_cpu_mem_usage=True,
+            low_cpu_mem_usage=False,
             trust_remote_code=True,
-            # max_memory={0: "15GB"} # Uncomment this line with you encounter CUDA out of memory errors
+            max_memory={0: "14GB"} # Uncomment this line with you encounter CUDA out of memory errors
         )
         model.tie_weights()
     else:
